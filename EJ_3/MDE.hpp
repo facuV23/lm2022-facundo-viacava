@@ -1,41 +1,51 @@
 #include <stdint.h>
 #include <stdio.h>
-#define N 50
+#include <iostream>
+#include <cstdlib> 
+#include <ctime>
+
+
 
 uint16_t sgn[] = {
-    #include "sgn.h"
+    #include "../EJ_2/sgn.h"
 };
+
+typedef enum {
+    ACUMULAR,
+    PROMEDIAR
+}_state;
+
+
 
 
  class MDE{
      public:
-     explicit MDE(uint32_t count){}
+     explicit MDE(){}
      ~MDE() {}
 
      void init(){
+        N = rand() % 51;
         acum = 0;
-        _State=_state::ACUMULAR;
+        estado=ACUMULAR;
      }
 
      void fsm(){
 
-        for (int i = 0; i < N; i++)
+        for (int i = 0; i <= N+1; i++)
         {
-            switch(_State){
+            switch(estado){
 
-                case _state::ACUMULAR:
+                case ACUMULAR:
                     acum = acum + sgn[i];
-                    i++;
-                    if(i=N){
-                        _State=_state::PROMEDIAR;
-                        break;
+                    if(i==N){
+                        estado=PROMEDIAR;
                     }
-                    
+                    break;
 
-                case _state::PROMEDIAR:
-                    printf("%d",acum/i);
+                case PROMEDIAR:
+                    printf("Promedio de los primeros %d numeros del archivo 'sgn.h': %d",i,acum/i);
                     acum = 0;
-                    _State=_state::ACUMULAR;
+                    estado=ACUMULAR;
                     break;
                 
                 default:
@@ -47,13 +57,8 @@ uint16_t sgn[] = {
     }
 
     private:
-
+    int N;
     uint32_t acum;
-
-    enum class _state{
-     ACUMULAR,
-     PROMEDIAR
-    }_State;
-
-
+    _state estado;
+    
 }; 
