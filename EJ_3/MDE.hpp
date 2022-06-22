@@ -1,5 +1,8 @@
 #include <stdint.h>
 #include <stdio.h>
+#include <iostream>
+#include <cstdlib> 
+#include <ctime>
 
 
 
@@ -12,7 +15,8 @@ typedef enum {
     PROMEDIAR
 }_state;
 
-int N = 40;
+
+
 
  class MDE{
      public:
@@ -20,6 +24,7 @@ int N = 40;
      ~MDE() {}
 
      void init(){
+        N = rand() % 51;
         acum = 0;
         estado=ACUMULAR;
      }
@@ -38,7 +43,7 @@ int N = 40;
                     break;
 
                 case PROMEDIAR:
-                    printf("Promedio:%d",acum/i);
+                    printf("Promedio de los primeros %d numeros del archivo 'sgn.h': %d",i,acum/i);
                     acum = 0;
                     estado=ACUMULAR;
                     break;
@@ -52,7 +57,7 @@ int N = 40;
     }
 
     private:
-
+    int N;
     uint32_t acum;
     _state estado;
     
